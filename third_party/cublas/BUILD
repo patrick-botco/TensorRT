@@ -22,6 +22,15 @@ config_setting(
 )
 
 config_setting(
+    name = "jetpack_6.0",
+    constraint_values = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+    ],
+)
+
+
+config_setting(
     name = "windows",
     constraint_values = [
         "@platforms//os:windows",
@@ -33,6 +42,7 @@ cc_library(
     hdrs = select({
         ":jetpack_4.5": glob(["usr/include/cublas*.h"]),
         ":jetpack_4.6": glob(["usr/cuda/include/cublas*.h"]),
+        ":jetpack_6.0": glob(["usr/cuda/include/cublas*.h"]),
         "//conditions:default": glob(["usr/cuda/include/cublas*.h"]),
     }),
     includes = ["include/"],
@@ -44,6 +54,7 @@ cc_import(
     shared_library = select({
         ":jetpack_4.5": "lib/aarch64-linux-gnu/libcublas.so",
         ":jetpack_4.6": "local/cuda/targets/aarch64-linux/lib/libcublas.so",
+        ":jetpack_6.0": "local/cuda/targets/aarch64-linux/lib/libcublas.so",
         ":windows": "lib/x64/cublas.lib",
         "//conditions:default": "local/cuda/targets/x86_64-linux/lib/libcublas.so",
     }),
@@ -55,6 +66,7 @@ cc_import(
     shared_library = select({
         ":jetpack_4.5": "lib/aarch64-linux-gnu/libcublasLt.so",
         ":jetpack_4.6": "local/cuda/targets/aarch64-linux/lib/libcublasLt.so",
+        ":jetpack_6.0": "local/cuda/targets/aarch64-linux/lib/libcublasLt.so",
         "//conditions:default": "local/cuda/targets/x86_64-linux/lib/libcublasLt.so",
     }),
     visibility = ["//visibility:private"],
