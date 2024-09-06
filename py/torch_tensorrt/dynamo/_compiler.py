@@ -463,23 +463,23 @@ def compile_module(
 
             trt_modules[name] = trt_module
 
-    torch_sample_arg_inputs = get_torch_inputs(
-        sample_arg_inputs, to_torch_device(settings.device)
-    )
-    torch_sample_kwarg_inputs = get_torch_inputs(
-        sample_kwarg_inputs, to_torch_device(settings.device)
-    )
-    sample_outputs = gm(*torch_sample_arg_inputs, **torch_sample_kwarg_inputs)
+    # torch_sample_arg_inputs = get_torch_inputs(
+    #     sample_arg_inputs, to_torch_device(settings.device)
+    # )
+    # torch_sample_kwarg_inputs = get_torch_inputs(
+    #     sample_kwarg_inputs, to_torch_device(settings.device)
+    # )
+    # sample_outputs = gm(*torch_sample_arg_inputs, **torch_sample_kwarg_inputs)
 
-    if not isinstance(sample_outputs, (list, tuple)):
-        sample_outputs = [sample_outputs]
+    # if not isinstance(sample_outputs, (list, tuple)):
+    #     sample_outputs = [sample_outputs]
 
-    dryrun_tracker.graph_output_shapes = parse_complex_tensor_structs(
-        sample_outputs, "shape", lambda x: dict(x) if isinstance(x, dict) else tuple(x)
-    )
-    dryrun_tracker.graph_output_dtypes = parse_complex_tensor_structs(
-        sample_outputs, "dtype"
-    )
+    # dryrun_tracker.graph_output_shapes = parse_complex_tensor_structs(
+    #     sample_outputs, "shape", lambda x: dict(x) if isinstance(x, dict) else tuple(x)
+    # )
+    # dryrun_tracker.graph_output_dtypes = parse_complex_tensor_structs(
+    #     sample_outputs, "dtype"
+    # )
 
     # Replace all FX Modules with TRT Modules
     for name, trt_module in trt_modules.items():
@@ -491,7 +491,7 @@ def compile_module(
     if fast_partitioner_failed:
         settings.use_fast_partitioner = True
 
-    dryrun_stats_display(dryrun_tracker, settings.dryrun)
+    # dryrun_stats_display(dryrun_tracker, settings.dryrun)
 
     return partitioned_module
 
