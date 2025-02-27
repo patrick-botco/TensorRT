@@ -30,7 +30,7 @@ new_local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.
 new_local_repository(
     name = "libtorch",
     build_file = "@//third_party/libtorch:BUILD",
-    path = "/home/jetson/.miniconda3/envs/torch_from_source/lib/python3.10/site-packages/torch",
+    path = "/home/jetson/.miniconda3/envs/botco/lib/python3.10/site-packages/torch",
 )
 
 # local CUDA installation
